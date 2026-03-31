@@ -1,0 +1,57 @@
+/* --- SIDEBAR MODERN --- */
+.sidebar { 
+    height: 100vh !important; 
+    background-color: var(--sidebar-bg) !important; /* Pastikan variable ini sesuai root lo */
+    position: fixed !important; 
+    width: 260px; 
+    /* Z-Index di bawah backdrop modal (1050) agar modal tetap di depan */
+    z-index: 1040 !important; 
+    left: 0; 
+    top: 0; 
+    padding: 2rem 1.5rem; 
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.03); /* Bayangan halus ke arah konten */
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto !important;
+}
+
+/* --- CONTENT AREA --- */
+.content-wrapper { 
+    margin-left: 260px; 
+    padding: 2.5rem; 
+    position: relative;
+    z-index: 1 !important; 
+    transition: all 0.4s ease;
+}
+
+/* --- FIX MODAL & BACKDROP (HIERARKI TERTINGGI) --- */
+/* Dipastikan modal dan backdrop menutupi sidebar saat aktif */
+.modal {
+    z-index: 1060 !important; 
+}
+.modal-backdrop {
+    z-index: 1050 !important; 
+    backdrop-filter: blur(4px); /* Efek blur pada background saat modal muncul */
+    background-color: rgba(15, 23, 42, 0.5) !important;
+}
+
+/* --- RESPONSIVE MOBILE OPTIMIZATION --- */
+@media (max-width: 992px) { 
+    .sidebar { 
+        left: -260px !important; 
+        box-shadow: none;
+    } 
+    
+    .content-wrapper { 
+        margin-left: 0 !important; 
+        padding: 1.5rem;
+    }
+
+    .sidebar.active {
+        left: 0 !important;
+        /* Di mobile, sidebar harus di depan segalanya saat terbuka */
+        z-index: 1070 !important; 
+        box-shadow: 20px 0 50px rgba(211, 12, 12, 0.825);
+    }
+}

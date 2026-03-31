@@ -1,9 +1,12 @@
-<IfModule mod_rewrite.c>
-    RewriteEngine On
+Options -Multiviews
 
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
+RewriteEngine On
 
-    RewriteRule ^(.+)$ index.php?url=$1 [L,QSA]
-</IfModule>
+# Balikin ke folder yang ada spasinya
+# Gunakan kutip dua ("") agar Apache bisa baca spasi dengan benar
+RewriteBase "/PEMINJAMAN ALAT/public/"
 
+# Pengaman agar data POST tidak hilang
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]

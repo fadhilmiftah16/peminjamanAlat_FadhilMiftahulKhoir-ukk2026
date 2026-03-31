@@ -1,18 +1,25 @@
 <?php
+
 class Database {
-    private $host = DB_HOST;
-    private $user = DB_USER;
-    private $pass = DB_PASS;
-    private $db_name = DB_NAME;
-    private $dbh;
+    private $host = "localhost";
+    private $user = "root";
+    private $pass = "";
+    private $db_name = "peminjaman_alat"; 
+    
+    private $dbh; // Database Handler
     private $stmt;
 
     public function __construct() {
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->db_name;
+        $option = [
+            PDO::ATTR_PERSISTENT => true,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+        ];
+
         try {
-            $this->dbh = new PDO($dsn, $this->user, $this->pass);
+            $this->dbh = new PDO($dsn, $this->user, $this->pass, $option);
         } catch (PDOException $e) {
-            die($e->getMessage());
+            die("Koneksi Database Gagal: " . $e->getMessage());
         }
     }
 
@@ -33,7 +40,7 @@ class Database {
     }
 
     public function execute() {
-        $this->stmt->execute();
+        return $this->stmt->execute();
     }
 
     public function resultSet() {
@@ -41,8 +48,13 @@ class Database {
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // --- TAMBAHKAN INI (FUNGSI YANG TADI HILANG) ---
     public function single() {
         $this->execute();
         return $this->stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function rowCount() {
+        return $this->stmt->rowCount();
     }
 }
